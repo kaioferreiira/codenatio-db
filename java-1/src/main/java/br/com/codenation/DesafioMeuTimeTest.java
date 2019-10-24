@@ -3,13 +3,16 @@ package br.com.codenation;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import br.com.codenation.desafio.exceptions.CapitaoNaoInformadoException;
 import br.com.codenation.desafio.exceptions.IdentificadorUtilizadoException;
 import br.com.codenation.desafio.exceptions.JogadorNaoEncontradoException;
 import br.com.codenation.desafio.exceptions.TimeNaoEncontradoException;
-import jdk.nashorn.internal.scripts.JO;
 
 public class DesafioMeuTimeTest {
 
@@ -48,8 +51,11 @@ public class DesafioMeuTimeTest {
         incluirJogador(3l, 1l, "mateus", LocalDate.now(), 60, new BigDecimal(6000.00));
 
         definirCapitao(1l);
-
         buscarCapitaoDoTime(1l);
+        buscarNomeJogador(1l);
+        buscarNomeTime(1l);
+
+        buscarJogadoresDoTime(1l);
 
 
 
@@ -134,7 +140,6 @@ public class DesafioMeuTimeTest {
         Jogador jogador = jogadorFindById(idJogador).get();
         jogador.getTime().setJogadorCapitaoTime(jogador);
 
-
     }
 
     /**
@@ -167,17 +172,65 @@ public class DesafioMeuTimeTest {
         Jogador capitao = capitaoOptional.get();
         return capitao.getId();
 	}
+    /*
+    Retorna o nome do jogador.
 
-	public String buscarNomeJogador(Long idJogador) {
-		throw new UnsupportedOperationException();
+    Long idJogador* Identificador do jogador
+            Exceções
+
+    Caso o jogador informado não exista, retornar br.com.codenation.desafio.exceptions.JogadorNaoEncontradoException
+
+	*/
+	public static String buscarNomeJogador(Long idJogador) {
+
+        Boolean validaJogador = jogadorFindById(idJogador).isPresent();
+
+        if (validaJogador.equals(Boolean.FALSE)){
+            throw new JogadorNaoEncontradoException();
+        }
+        Optional<Jogador> jogador = jogadorFindById(idJogador);
+        return jogador.get().getNome() ;
 	}
 
-	public String buscarNomeTime(Long idTime) {
-		throw new UnsupportedOperationException();
-	}
+	/*
+    Retorna o nome do time.
 
-	public List<Long> buscarJogadoresDoTime(Long idTime) {
-		throw new UnsupportedOperationException();
+    Long idTime* Identificador do Time
+            Exceções
+
+    Caso o time informado não exista, retornar br.com.codenation.desafio.exceptions.TimeNaoEncontradoException
+    */
+	public static String buscarNomeTime(Long idTime) {
+
+        Boolean validaTime = timesFindById(idTime).isPresent();
+
+        if (validaTime.equals(Boolean.FALSE)){
+            throw new TimeNaoEncontradoException();
+        }
+        String nomeTime = timesFindById(idTime).get().getNome();
+        return nomeTime;
+	}
+    /*
+    Retorna a lista com o identificador de todos os jogadores do time, ordenada pelo id.
+
+    Long idTime* Identificador do Time
+            Exceções
+
+    Caso o time informado não exista, retornar br.com.codenation.desafio.exceptions.TimeNaoEncontradoException
+	*/
+	public static List<Long> buscarJogadoresDoTime(Long idTime) {
+
+        Boolean validaTime = timesFindById(idTime).isPresent();
+
+        if (validaTime.equals(Boolean.FALSE)){
+            throw new TimeNaoEncontradoException();
+        }
+
+        Optional<TimeFutebol> timeFutebolEncontrado = timesFindById(idTime);
+
+        List<Long> list = jogadoresCadastradosBD.values().stream().filter(jogador -> jogador.getTime().getId().equals(idTime)).map(Jogador::getId).collect(Collectors.toList());
+
+        return list;
 	}
 
 	public Long buscarMelhorJogadorDoTime(Long idTime) {
