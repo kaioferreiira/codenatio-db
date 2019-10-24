@@ -9,18 +9,18 @@ public class TimeFutebol {
     private LocalDate dataCriacao;
     private String corUniformePrincipal;
     private String corUniformeSecundario;
-    private Long idCapitaoTime;
+    private Jogador jogadorCapitaoTime;
 
     public TimeFutebol() {
     }
 
-    public TimeFutebol(Long id, String nome, LocalDate dataCriacao, String corUniformePrincipal, String corUniformeSecundario, Long idCapitaoTime) {
+    public TimeFutebol(Long id, String nome, LocalDate dataCriacao, String corUniformePrincipal, String corUniformeSecundario, Jogador jogadorCapitaoTime) {
         this.id = id;
         this.nome = nome;
         this.dataCriacao = dataCriacao;
         this.corUniformePrincipal = corUniformePrincipal;
         this.corUniformeSecundario = corUniformeSecundario;
-        this.idCapitaoTime = idCapitaoTime;
+        this.jogadorCapitaoTime = jogadorCapitaoTime;
     }
 
     public Long getId() {
@@ -63,12 +63,8 @@ public class TimeFutebol {
         this.corUniformeSecundario = corUniformeSecundario;
     }
 
-    public Long getIdCapitaoTime() {
-        return idCapitaoTime;
-    }
-
-    public void setIdCapitaoTime(Long idCapitaoTime) {
-        this.idCapitaoTime = idCapitaoTime;
+    public Jogador getJogadorCapitaoTime() {
+        return jogadorCapitaoTime;
     }
 
     @Override
@@ -79,7 +75,13 @@ public class TimeFutebol {
                 ", dataCriacao=" + dataCriacao +
                 ", corUniformePrincipal='" + corUniformePrincipal + '\'' +
                 ", corUniformeSecundario='" + corUniformeSecundario + '\'' +
-                ", idCapitaoTime=" + idCapitaoTime +
+                ", jogadorCapitaoTime=" + jogadorCapitaoTime +
                 '}';
     }
+
+    public void setJogadorCapitaoTime(Jogador jogadorCapitaoTime) {
+        this.jogadorCapitaoTime = jogadorCapitaoTime;
+    }
+
+
 }

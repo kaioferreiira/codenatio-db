@@ -3,13 +3,13 @@ package br.com.codenation;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
+import br.com.codenation.desafio.exceptions.CapitaoNaoInformadoException;
 import br.com.codenation.desafio.exceptions.IdentificadorUtilizadoException;
+import br.com.codenation.desafio.exceptions.JogadorNaoEncontradoException;
 import br.com.codenation.desafio.exceptions.TimeNaoEncontradoException;
+import jdk.nashorn.internal.scripts.JO;
 
 public class DesafioMeuTimeTest {
 
@@ -30,10 +30,13 @@ public class DesafioMeuTimeTest {
         timeFutebol1.setDataCriacao(dataCriacao);
         timeFutebol1.setCorUniformePrincipal(corUniformePrincipal);
         timeFutebol1.setCorUniformeSecundario(corUniformeSecundario);
+        timeFutebol1.setJogadorCapitaoTime(null);
+
         timesCadastradosBD.put(timeFutebol1.getId(), timeFutebol1);
 
-        Jogador jogador =  new Jogador(1l, 1l, "kaio", LocalDate.now(), 90, new BigDecimal(10000.00));
-        jogadoresCadastradosBD.put(jogador.getId(), jogador);
+        Jogador jogador1 = new Jogador(1l, timeFutebol1,"Kaio", LocalDate.now(), 90, new BigDecimal(12121) );
+
+        jogadoresCadastradosBD.put(jogador1.getId(), jogador1);
 
 
     }
@@ -43,6 +46,12 @@ public class DesafioMeuTimeTest {
         incluirTime(2l, "flamengo", LocalDate.now(), "vermelho", "branco");
         incluirJogador(2l, 2l, "lucas", LocalDate.now(), 30, new BigDecimal(2000.00));
         incluirJogador(3l, 1l, "mateus", LocalDate.now(), 60, new BigDecimal(6000.00));
+
+        definirCapitao(1l);
+
+        buscarCapitaoDoTime(1l);
+
+
 
     }
 
@@ -100,18 +109,63 @@ public class DesafioMeuTimeTest {
         if (validaTime.equals(Boolean.FALSE)){
             throw new TimeNaoEncontradoException();
         }
-        Jogador jogador = new Jogador(id, idTime, nome, dataNascimento, nivelHabilidade, salario);
+
+        TimeFutebol timeFutebol = timesFindById(idTime).get();
+
+        Jogador jogador = new Jogador(id, timeFutebol, nome, dataNascimento, nivelHabilidade, salario);
 
         salvaJogadorBD(jogador);
 	}
 
+//    Define um jogador como capitão do seu time. Um time deve ter apenas um capitão, por tanto o capitão anterior voltará a ser apenas jogador.
+//
+//    Long idJogador* Identificador do jogador.
+//            Exceções:
+//
+//    Caso o jogador informado não exista, retornar br.com.codenation.desafio.exceptions.JogadorNaoEncontradoException
+    public static void definirCapitao(Long idJogador) {
 
-    public void definirCapitao(Long idJogador) {
-		throw new UnsupportedOperationException();
-	}
+        Boolean validaJogador = jogadorFindById(idJogador).isPresent();
 
-	public Long buscarCapitaoDoTime(Long idTime) {
-		throw new UnsupportedOperationException();
+        if (validaJogador.equals(Boolean.FALSE)){
+            throw new JogadorNaoEncontradoException();
+        }
+
+        Jogador jogador = jogadorFindById(idJogador).get();
+        jogador.getTime().setJogadorCapitaoTime(jogador);
+
+
+    }
+
+    /**
+     * Mostra o identificador do capitao do time.
+     *
+     * Caso o time informado nao exista, retornar
+     * br.com.codenation.desafio.exceptions.TimeNaoEncontradoException
+     *
+     * Caso o time informado nao tenha um capitao, retornar
+     * br.com.codenation.desafio.exceptions.CapitaoNaoInformadoException
+     */
+	public static Long buscarCapitaoDoTime(Long idTime) {
+
+
+        Optional<TimeFutebol> timeOptional = timesFindById(idTime);
+
+        Boolean validaTime = timeOptional.isPresent();
+        if (validaTime.equals(Boolean.FALSE)){
+            throw new TimeNaoEncontradoException();
+        }
+
+        TimeFutebol time = timeOptional.get();
+        Optional<Jogador> capitaoOptional = Optional.ofNullable(time.getJogadorCapitaoTime());
+
+        Boolean timeNaoTemCapitao = capitaoOptional.isPresent();
+        if (timeNaoTemCapitao.equals(Boolean.FALSE)) {
+            throw new CapitaoNaoInformadoException();
+        }
+
+        Jogador capitao = capitaoOptional.get();
+        return capitao.getId();
 	}
 
 	public String buscarNomeJogador(Long idJogador) {
