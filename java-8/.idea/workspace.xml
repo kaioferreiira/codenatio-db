@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="21e3dd0f-08d7-4df5-9c98-4622aa475900" name="Default Changelist" comment="" />
+    <list default="true" id="21e3dd0f-08d7-4df5-9c98-4622aa475900" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../java-9/src/main/java/com/challenge/entity/Aceleration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../java-9/src/main/java/com/challenge/entity/Candidate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../java-9/src/main/java/com/challenge/entity/Challenge.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../java-9/src/main/java/com/challenge/entity/Company.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../java-9/src/main/java/com/challenge/entity/Submission.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../java-9/src/main/java/com/challenge/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java-9/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/../java-9/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../java-9/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../java-9/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -56,12 +66,12 @@
       <option name="presentableId" value="Default" />
       <updated>1572696767861</updated>
       <workItem from="1572696769367" duration="607000" />
-      <workItem from="1572721115650" duration="917000" />
+      <workItem from="1572721115650" duration="1889000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1524000" />
+    <option name="totallyTimeSpent" value="2496000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1040" extended-state="0" />
